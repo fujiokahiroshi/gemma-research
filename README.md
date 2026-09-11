@@ -88,16 +88,84 @@ git clone --recursive https://github.com/fujiokahiroshi/gemma-research.git
 
 ## PC実験環境
 
-1. LM Studioで`gemma4-12b-qat`をContext 16384、Parallel 1でロードします。
-2. LM Studio Local Serverを`http://127.0.0.1:1234`で開始します。
-3. `ai-nas-manager/ai-nas-manager`でPC Appを起動します。
+### 1. LM StudioをWindowsへ導入
+
+1. [LM Studio公式ダウンロードページ](https://lmstudio.ai/download?os=win32)を開きます。
+2. Windows版をダウンロードし、取得したインストーラーを実行します。
+3. インストール完了後、LM Studioを起動します。
+4. 初回起動時にRuntimeの導入を求められた場合は、推奨される`llama.cpp` Runtimeを導入します。
+
+LM StudioはWindows x64/ARM64に対応しています。この実験環境ではWindows x64版を使用します。
+モデルの検索とダウンロード時にはインターネット接続が必要ですが、モデル取得後の推論と
+localhost上のAPI処理はローカルだけで実行できます。
+
+### 2. Gemmaモデルを取得
+
+1. 左側の`Discover`を開きます。Windowsでは`Ctrl+2`でも開けます。
+2. 検索欄で使用するGemmaモデルを検索します。
+3. この実験で使用する12B QATのGGUFモデルを選び、PCのメモリに収まる量子化をダウンロードします。
+4. 既にGGUFを持っている場合は、LM Studioへimportして使用できます。
+
+モデル名や配布元は更新される可能性があります。Appから指定するモデル識別名は
+`gemma4-12b-qat`に統一します。
+
+### 3. Gemmaをロード
+
+1. `Chat`を開き、画面下部のモデル選択欄を押します。`Ctrl+L`でもモデルローダーを開けます。
+2. ダウンロードしたGemma 12B QATを選択します。
+3. Load設定でContext Lengthを`16384`にします。
+4. Parallel Requestsを`1`にします。
+5. GPU Offloadは、VRAMに収まる範囲で最大にします。
+6. モデルをロードし、Chatで短い日本語応答が返ることを確認します。
+
+Contextを大きくしすぎるとメモリ使用量と初期処理時間が増えます。複数のFragment画像を扱いながら
+安定性を保つため、このPCの基準値をContext `16384`、Parallel `1`としています。
+
+### 4. Local Serverを開始
+
+LM StudioのDeveloperまたはLocal Server画面を開き、サーバーを開始します。
+標準の接続先は次の通りです。
+
+```text
+http://127.0.0.1:1234
+```
+
+LM Studioに含まれる`lms`コマンドを使う場合は、次の操作でも開始できます。
 
 ```powershell
+lms ls
+lms server start
+```
+
+別のPowerShellから、OpenAI互換APIが応答することを確認できます。
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:1234/v1/models
+```
+
+### 5. PC Appを起動
+
+GitHubから初めて取得する場合:
+
+```powershell
+git clone --recursive https://github.com/fujiokahiroshi/gemma-research.git
+cd gemma-research\ai-nas-manager\ai-nas-manager
 .\start_pc_app.ps1
 ```
 
+このPCの既存作業フォルダから起動する場合:
+
+```powershell
+cd "C:\Users\yukik\gemmmaの研究\ai-nas-manager\ai-nas-manager"
+.\start_pc_app.ps1
+```
+
+ブラウザで`http://127.0.0.1:8788`を開きます。
 Appのメニューから映像を選択し、`静的解析を開始`または
 `リアルタイム解析を開始`を実行します。
+
+LM Studio公式手順は[Get started with LM Studio](https://lmstudio.ai/docs/app/basics)と
+[Download an LLM](https://lmstudio.ai/docs/app/basics/download-model)を参照してください。
 
 ## 研究の次段階
 
