@@ -60,11 +60,11 @@ catch {
     Write-Warning 'LM Studio is not responding at http://127.0.0.1:1234. The App will start, but Gemma analysis requires LM Studio.'
 }
 
-$startArguments = @('-Port', $Port)
+$startArguments = @{ Port = $Port }
 if ($KeepExisting) {
-    $startArguments += '-KeepExisting'
+    $startArguments.KeepExisting = $true
 }
 if ($NoBrowser) {
-    $startArguments += '-NoBrowser'
+    $startArguments.NoBrowser = $true
 }
 & $appStart @startArguments
