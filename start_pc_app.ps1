@@ -1,7 +1,8 @@
 param(
     [int]$Port = 8788,
     [switch]$KeepExisting,
-    [switch]$SkipModelDownload
+    [switch]$SkipModelDownload,
+    [switch]$NoBrowser
 )
 
 $ErrorActionPreference = 'Stop'
@@ -62,5 +63,8 @@ catch {
 $startArguments = @('-Port', $Port)
 if ($KeepExisting) {
     $startArguments += '-KeepExisting'
+}
+if ($NoBrowser) {
+    $startArguments += '-NoBrowser'
 }
 & $appStart @startArguments
