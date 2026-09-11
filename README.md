@@ -76,14 +76,42 @@ Scene境界は、リアルタイム性を保つオンラインCUSUM/BOCPDと意�
 Git submoduleとして参照します。このリポジトリの初期基準点は次のコミットです。
 
 ```text
-351a12a9d952d2e5f208c885cd1e9adf27a13eeb
-feat: auto-scroll live Fragment list
+b524763e759ed03ac5e174a24cf6d24ba24c8139
+feat: support empty first-run App startup
 ```
 
 取得方法:
 
 ```bash
 git clone --recursive https://github.com/fujiokahiroshi/gemma-research.git
+```
+
+## Windowsクイックスタート
+
+Git for Windows、`uv`、LM Studioを導入後、次の3行でAppを起動できます。
+
+```powershell
+git clone https://github.com/fujiokahiroshi/gemma-research.git
+cd gemma-research
+.\start_pc_app.ps1
+```
+
+トップレベルの`start_pc_app.ps1`は次を自動実行します。
+
+- `ai-nas-manager` submoduleの初期化と取得
+- YOLOX-Tiny ONNXモデルのダウンロードとSHA-256検証
+- LM Studio Local Serverの接続確認
+- 依存Pythonパッケージの`uv`による準備
+- 空のPC App起動とブラウザ表示
+
+動画やデータベースはGitHubから取得しません。App起動後、メニューの
+`Windowsから映像を開く…`または`Windowsから画像を開く…`からローカルファイルを選択します。
+LM Studioが停止していてもApp画面は起動しますが、Gemma解析を行う前にLocal Serverを開始してください。
+
+PowerShellの実行ポリシーでスクリプトが停止された場合:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\start_pc_app.ps1
 ```
 
 ## PC実験環境
