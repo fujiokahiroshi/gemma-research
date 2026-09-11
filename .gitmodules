@@ -1,0 +1,3 @@
+[submodule "ai-nas-manager"]
+	path = ai-nas-manager
+	url = https://github.com/fujiokahiroshi/ai-nas-manager.git

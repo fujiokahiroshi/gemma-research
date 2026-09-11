@@ -1,0 +1,30 @@
+# Local video and databases
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm
+*.m4v
+*.ts
+*.m2ts
+*.sqlite
+*.sqlite3
+*.db
+
+# Local model weights and credentials/configuration
+*.onnx
+*.gguf
+*.safetensors
+lm-studio-mcp.json
+mcp*.json
+mcp*.json.*
+.env
+.env.*
+
+# Generated state
+__pycache__/
+.pytest_cache/
+.uv-*/
+pc-app-analysis/
+pc-app-imports/
+*.log
