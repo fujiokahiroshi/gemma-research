@@ -28,7 +28,7 @@ MP4 / RTSP / MPEG-TS / Rockchip MPP
 
 - Repository: `fujiokahiroshi/ai-nas-manager`
 - Branch at checkpoint: `master`
-- Commit: `9c77f503211476254ea5ba0c065782d65b98ab74`
+- Commit: `351a12a9d952d2e5f208c885cd1e9adf27a13eeb`
 - Local model: `gemma4-12b-qat`
 - LM Studio context: `16384`
 - LM Studio parallel requests: `1`
