@@ -76,8 +76,8 @@ Scene境界は、リアルタイム性を保つオンラインCUSUM/BOCPDと意�
 Git submoduleとして参照します。このリポジトリの初期基準点は次のコミットです。
 
 ```text
-0fd26c18d4a25d05f2470f16913f296f33356b9d
-feat: add still image loading and Gemma analysis
+9c77f503211476254ea5ba0c065782d65b98ab74
+fix: replace stale PC App instance on startup
 ```
 
 取得方法:
