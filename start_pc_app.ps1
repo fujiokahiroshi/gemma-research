@@ -6,22 +6,33 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$projectDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$projectDir = $PSScriptRoot
 $submoduleDir = Join-Path $projectDir 'ai-nas-manager'
-$appDir = Join-Path $submoduleDir 'ai-nas-manager'
-$appStart = Join-Path $appDir 'start_pc_app.ps1'
 
-if (-not (Test-Path -LiteralPath $appStart)) {
+function Find-AppStart {
+    $candidates = @(
+        (Join-Path $submoduleDir 'start_pc_app.ps1'),
+        (Join-Path $submoduleDir 'ai-nas-manager\start_pc_app.ps1')
+    )
+    return $candidates | Where-Object { Test-Path -LiteralPath $_ } | Select-Object -First 1
+}
+
+$appStart = Find-AppStart
+
+if (-not $appStart) {
     $git = Get-Command git -ErrorAction SilentlyContinue
     if (-not $git) {
         throw 'Git is required. Install Git for Windows and retry.'
     }
     Write-Host 'Initializing the ai-nas-manager submodule...'
     & $git.Source -C $projectDir submodule update --init --recursive
-    if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $appStart)) {
+    $appStart = Find-AppStart
+    if ($LASTEXITCODE -ne 0 -or -not $appStart) {
         throw 'The ai-nas-manager submodule could not be initialized.'
     }
 }
+
+$appDir = Split-Path -Parent $appStart
 
 $uv = Get-Command uv -ErrorAction SilentlyContinue
 if (-not $uv) {
